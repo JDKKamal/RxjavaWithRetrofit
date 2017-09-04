@@ -19,6 +19,7 @@ import com.ln.rxjavawithretrofit.rx2callback.RxJava2ApiCallback;
 import com.ln.rxjavawithretrofit.utils.NetworkUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -58,22 +59,18 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Observable<JsonArray> observable = ApiHelper
+        Observable<List<GitHubUser>> observable = ApiHelper
                 .getInstance(this)
                 .getService(GitHubUserService.class)
                 .getGitHubUser();
 
-        Disposable disposable = RxJava2ApiCallHelper.call(observable, new RxJava2ApiCallback<JsonArray>() {
+        Disposable disposable = RxJava2ApiCallHelper.call(observable, new RxJava2ApiCallback<List<GitHubUser>>() {
             @Override
-            public void onSuccess(JsonArray jsonArray) {
+            public void onSuccess(List<GitHubUser> jsonArray) {
                 Log.d(TAG, "onSuccess() called with: jsonArray = [" + jsonArray + "]");
                 if (jsonArray != null) {
-                    ArrayList<GitHubUser> gitHubUserArrayList = new ArrayList<>();
-                    for (JsonElement jsonElement : jsonArray) {
-                        GitHubUser gitHubUsers = new Gson().fromJson(jsonElement, GitHubUser.class);
-                        gitHubUserArrayList.add(gitHubUsers);
-                    }
-                    mGitHubUserAdapter.setData(gitHubUserArrayList);
+
+                    mGitHubUserAdapter.setData(jsonArray);
                 }
             }
 

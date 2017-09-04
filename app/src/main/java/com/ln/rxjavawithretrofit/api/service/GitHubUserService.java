@@ -2,6 +2,9 @@ package com.ln.rxjavawithretrofit.api.service;
 
 
 import com.google.gson.JsonArray;
+import com.ln.rxjavawithretrofit.api.response.GitHubUser;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -12,6 +15,6 @@ import retrofit2.http.GET;
 public interface GitHubUserService {
 
     @GET("users")
-    Observable<JsonArray> getGitHubUser();
+    Observable<List<GitHubUser>> getGitHubUser();
 
 }
